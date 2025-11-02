@@ -10,7 +10,7 @@ namespace HelpDeskAI.Controllers
             Nome = "Admin",
             Email = "admin@helpdesk.com",
             Telefone = "(11) 99999-9999",
-            Senha = "1234"
+            Senha = "123"
         };
 
         [HttpGet]

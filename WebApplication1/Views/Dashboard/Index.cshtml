@@ -8,6 +8,7 @@
 </header>
 
 <div class="dashboard-container">
+    <!-- SIDEBAR -->
     <aside class="sidebar">
         <nav>
             <a href="/Chamados/Abrir"> Abrir Chamado</a>
@@ -17,26 +18,63 @@
         </nav>
     </aside>
 
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="dashboard-content">
         <h1>📊 Dashboard de Chamados</h1>
 
-        <div class="cards">
-            <div class="card pendente">
+        <div class="dashboard-grid">
+            <!-- CARDS -->
+            <div class="cards">
+                <div class="card pendente">
                 <h2>Pendentes</h2>
-                <p>@ViewBag.Pendentes</p>
-            </div>
-            <div class="card andamento">
+                    <p>@ViewBag.Pendentes</p>
+                </div>
+                <div class="card andamento">
                 <h2>Em Andamento</h2>
-                <p>@ViewBag.Andamento</p>
-            </div>
-            <div class="card finalizado">
+                    <p>@ViewBag.Andamento</p>
+                </div>
+                <div class="card finalizado">
                 <h2>Finalizados</h2>
-                <p>@ViewBag.Finalizados</p>
+                    <p>@ViewBag.Finalizados</p>
+                </div>
             </div>
-        </div>
 
-        <div class="chart-container">
-            <canvas id="statusChart"></canvas>
+            <!-- GRÁFICO -->
+            <div class="chart-container">
+                <canvas id="statusChart"></canvas>
+            </div>
+
+            <!-- TABELA -->
+            <div class="tabela-container">
+                <h2>📋 Chamados</h2>
+                <table class="tabela-chamados">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Categoria</th>
+                            <th>Prioridade</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var chamado in Model)
+                        {
+                            <tr>
+                                <td>@chamado.Id</td>
+                                <td>@chamado.Titulo</td>
+                                <td>@chamado.Categoria</td>
+                                <td>@chamado.Prioridade</td>
+                                <td>
+                                    <span class="status @chamado.Status.ToLower().Replace(" ", "-")">@chamado.Status</span>
+                                </td>
+                                <td><a href="/Chamados/Detalhes/@chamado.Id" class="btn-detalhes">Ver</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 </div>
@@ -57,7 +95,7 @@
             responsive: true,
             plugins: {
                 legend: { position: 'bottom' }
-            }
+        }
         }
     });
 </script>
@@ -67,6 +105,7 @@
         font-family: 'Segoe UI';
         margin: 0;
         background: #f5f8ff;
+        overflow: hidden; /* ❌ sem rolagem */
     }
 
     .topbar {
@@ -104,11 +143,33 @@
                 color: white;
             }
 
+    .logout {
+        color: #dc3545;
+        font-weight: bold;
+    }
+
     .dashboard-content {
         flex: 1;
         padding: 30px;
     }
 
+    h1 {
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    /* === GRID PRINCIPAL === */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 250px 350px 1fr;
+        grid-template-rows: 1fr;
+        align-items: center;
+        justify-items: center;
+        gap: 15px;
+        height: 100%;
+    }
+
+    /* === CARDS === */
     .cards {
         display: flex;
         gap: 20px;
@@ -123,25 +184,28 @@
         padding: 20px;
         text-align: center;
         font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        font-size: 14px;
     }
 
     .pendente {
         background: #ffe5e5;
         color: #ff5c5c;
-    }
+        }
 
     .andamento {
         background: #fff3cd;
         color: #e6a800;
-    }
+        }
 
     .finalizado {
         background: #d4edda;
-        color: #28a745;
-    }
+            color: #28a745;
+        }
 
+    /* === GRÁFICO === */
     .chart-container {
         width: 400px;
         margin: 0 auto;
-    }
+        }
 </style>

@@ -15,18 +15,20 @@
             <input type="text" name="Titulo" placeholder="Título do problema" required />
 
             <div class="form-row">
-                <select name="Categoria" required>
-                    <option value="">Selecione a categoria</option>
-                    <option value="Financeiro">Financeiro</option>
-                    <option value="RH">RH</option>
-                    <option value="TI">TI</option>
-                </select>
+            <select name="Categoria" required>
+                <option value="">Selecione a categoria</option>
+                <option value="Financeiro">Financeiro</option>
+                <option value="RH">RH</option>
+                <option value="TI">TI</option>
+            </select>
 
-                <select name="Prioridade">
-                    <option value="Alta">Alta</option>
+            <select name="Prioridade">
+                <option value="Baixa">Baixa</option>
+                <option value="Média">Média</option>
+                <option value="Alta">Alta</option>
                     <option value="Média">Média</option>
                     <option value="Baixa">Baixa</option>
-                </select>
+            </select>
             </div>
 
             <textarea name="Descricao" placeholder="Descreva o problema detalhadamente..." required></textarea>
@@ -39,6 +41,7 @@
 </div>
 
 <style>
+/* === FAIXA SUPERIOR === */
     body {
         margin: 0;
         font-family: 'Segoe UI';
@@ -52,50 +55,96 @@
         padding: 15px;
         font-size: 24px;
         font-weight: bold;
-    }
+}
 
-    .page-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+/* === CONTEÚDO CENTRAL === */
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
         height: calc(100vh - 100px);
-    }
+}
 
-    .form-card {
-        background: white;
-        padding: 40px;
-        border-radius: 15px;
+/* === CARTÕES CENTRAIS === */
+.form-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
         box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         width: 400px;
-        text-align: center;
-    }
+    text-align: center;
+    transition: transform 0.2s;
+}
 
-    input, select, textarea {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
+.form-card:hover {
+    transform: translateY(-3px);
+}
+
+h2 {
+    color: #007bff;
+    margin-bottom: 25px;
+}
+
+/* === CAMPOS DE TEXTO === */
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
         border: 1px solid #ccc;
         margin-bottom: 15px;
-    }
+}
 
-    .btn-enviar {
+input:focus, select:focus, textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 115, 255, 0.3);
+    outline: none;
+}
+
+/* === BOTÃO PRINCIPAL === */
+.btn-enviar {
         background: #006eff;
-        color: white;
-        border: none;
-        border-radius: 8px;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
         padding: 12px;
         width: 100%;
-        font-weight: bold;
-        cursor: pointer;
-    }
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
 
-        .btn-enviar:hover {
+.btn-enviar:hover {
             background: #0056cc;
-        }
+}
 
     .btn-voltar {
-        text-decoration: none;
+    text-decoration: none;
         color: #6c757d;
-        font-weight: bold;
-    }
+    font-weight: bold;
+}
+
+.link-text a:hover {
+    text-decoration: underline;
+}
+
+/* === BOTÃO VOLTAR === */
+.btn-voltar {
+    display: inline-block;
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.btn-voltar:hover {
+    background-color: #5a6268;
+}
 </style>

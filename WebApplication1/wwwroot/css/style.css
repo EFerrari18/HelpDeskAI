@@ -22,7 +22,7 @@ body {
 
 .logo span {
     color: #ffd700;
-}
+    }
 
 /* ====== CONTAINER CENTRAL ====== */
 .page-container {
@@ -42,17 +42,23 @@ body {
     max-width: 480px;
     width: 100%;
     text-align: center;
+    transition: transform 0.2s;
 }
 
-    .form-card h2, .form-card h1 {
-        color: #007bff;
-        margin-bottom: 20px;
+    .form-card:hover {
+        transform: translateY(-3px);
     }
+
+    .form-card h2, .form-card h1 {
+    color: #007bff;
+        margin-bottom: 20px;
+}
 
 /* ====== CAMPOS ====== */
 input, select, textarea {
     width: 100%;
     padding: 12px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
@@ -63,6 +69,7 @@ input, select, textarea {
 
     input:focus, select:focus, textarea:focus {
         border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 115, 255, 0.3);
         outline: none;
     }
 
@@ -238,6 +245,7 @@ textarea {
 /* ====== LOGIN E CADASTRO ====== */
 .link-text {
     margin-top: 15px;
+    font-size: 14px;
 }
 
     .link-text a {
@@ -254,4 +262,4 @@ textarea {
 form input[readonly] {
     background: #eee;
     cursor: not-allowed;
-}
+    }
