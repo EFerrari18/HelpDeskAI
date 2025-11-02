@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="page-container">
+    <div class="form-card">
+        <h2> Bem Vindo</h2>
+
+        <form method="post" asp-action="Login" asp-controller="Usuario">
+            <input type="email" name="email" placeholder="E-mail" required />
+            <input type="password" name="senha" placeholder="Senha" required />
+            <button type="submit" class="btn-enviar">Entrar</button>
+        </form>
+
+        @if (ViewBag.Mensagem != null)
+        {
+            <p style="color:red;">@ViewBag.Mensagem</p>
+        }
+
+        <p class="link-text">
+            Ainda não tem conta?
+            <a href="/Usuario/Cadastrar">Cadastre-se</a>
+        </p>
+    </div>
+</div>
+
+
+<style>
+    /* === FAIXA SUPERIOR === */
+    .top-bar {
+        width: 100%;
+        background: #007bff;
+        color: white;
+        text-align: center;
+        padding: 8px 0;
+        font-size: 20px;
+        font-weight: bold;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .top-bar span {
+            color: #dce6ff;
+        }
+
+    /* === CONTEÚDO CENTRAL === */
+    .page-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 60px);
+        background-color: #f5f7fb;
+        padding: 20px;
+    }
+
+    .form-card {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+    }
+
+    h2 {
+        color: #007bff;
+        margin-bottom: 25px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        box-sizing: border-box;
+        transition: all 0.2s;
+    }
+
+        input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 115, 255, 0.3);
+            outline: none;
+        }
+
+    .btn-enviar {
+        width: 100%;
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+        .btn-enviar:hover {
+            background: #0056b3;
+        }
+
+    .link-text {
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+        .link-text a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            .link-text a:hover {
+                text-decoration: underline;
+            }
+</style>

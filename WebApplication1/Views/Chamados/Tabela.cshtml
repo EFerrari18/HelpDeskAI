@@ -1,0 +1,38 @@
+﻿@model IEnumerable<HelpDeskAI.Models.Chamado>
+@{
+    ViewData["Title"] = "Lista de Chamados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <h2> Lista de Chamados</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Categoria</th>
+                <th>Prioridade</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var chamado in Model)
+            {
+                <tr>
+                    <td>@chamado.Id</td>
+                    <td>@chamado.Titulo</td>
+                    <td>@chamado.Categoria</td>
+                    <td>@chamado.Prioridade</td>
+                    <td>@chamado.Status</td>
+                    <td>
+                        <a class="btn" href="/Chamados/Detalhes/@chamado.Id">🔍 Detalhes</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="/Chamados/Abrir" class="btn">📝 Abrir Novo Chamado</a>
+</div>

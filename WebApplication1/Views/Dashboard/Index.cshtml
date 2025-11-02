@@ -1,0 +1,147 @@
+﻿@model IEnumerable<HelpDeskAI.Models.Chamado>
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<header class="topbar">
+    <h1>HelpDesk <span>AI</span></h1>
+</header>
+
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <nav>
+            <a href="/Chamados/Abrir"> Abrir Chamado</a>
+            <a href="/Faq/Index"> FAQ</a>
+            <a href="/Usuario/Perfil"> Meu Perfil</a>
+            <a href="/Usuario/Login" class="logout"> Sair</a>
+        </nav>
+    </aside>
+
+    <main class="dashboard-content">
+        <h1>📊 Dashboard de Chamados</h1>
+
+        <div class="cards">
+            <div class="card pendente">
+                <h2>Pendentes</h2>
+                <p>@ViewBag.Pendentes</p>
+            </div>
+            <div class="card andamento">
+                <h2>Em Andamento</h2>
+                <p>@ViewBag.Andamento</p>
+            </div>
+            <div class="card finalizado">
+                <h2>Finalizados</h2>
+                <p>@ViewBag.Finalizados</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="statusChart"></canvas>
+        </div>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('statusChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Pendente', 'Em andamento', 'Finalizado'],
+            datasets: [{
+                data: [@ViewBag.Pendentes, @ViewBag.Andamento, @ViewBag.Finalizados],
+                backgroundColor: ['#ff5c5c', '#ffc107', '#28a745']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+
+<style>
+    body {
+        font-family: 'Segoe UI';
+        margin: 0;
+        background: #f5f8ff;
+    }
+
+    .topbar {
+        background: #006eff;
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .dashboard-container {
+        display: flex;
+        height: calc(100vh - 80px);
+    }
+
+    .sidebar {
+        width: 240px;
+        background: white;
+        padding: 20px;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    }
+
+        .sidebar nav a {
+            display: block;
+            padding: 12px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+            .sidebar nav a:hover {
+                background: #006eff;
+                color: white;
+            }
+
+    .dashboard-content {
+        flex: 1;
+        padding: 30px;
+    }
+
+    .cards {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        flex: 1;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        padding: 20px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .pendente {
+        background: #ffe5e5;
+        color: #ff5c5c;
+    }
+
+    .andamento {
+        background: #fff3cd;
+        color: #e6a800;
+    }
+
+    .finalizado {
+        background: #d4edda;
+        color: #28a745;
+    }
+
+    .chart-container {
+        width: 400px;
+        margin: 0 auto;
+    }
+</style>

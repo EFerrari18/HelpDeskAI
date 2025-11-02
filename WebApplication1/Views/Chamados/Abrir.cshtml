@@ -1,0 +1,101 @@
+﻿@model HelpDeskAI.Models.Chamado
+@{
+    ViewData["Title"] = "Abrir Chamado";
+}
+
+<header class="top-bar">
+    <h1>HelpDesk <span>AI</span></h1>
+</header>
+
+<div class="page-container">
+    <div class="form-card">
+        <h2> Abrir Chamado</h2>
+
+        <form asp-action="Abrir" method="post">
+            <input type="text" name="Titulo" placeholder="Título do problema" required />
+
+            <div class="form-row">
+                <select name="Categoria" required>
+                    <option value="">Selecione a categoria</option>
+                    <option value="Financeiro">Financeiro</option>
+                    <option value="RH">RH</option>
+                    <option value="TI">TI</option>
+                </select>
+
+                <select name="Prioridade">
+                    <option value="Alta">Alta</option>
+                    <option value="Média">Média</option>
+                    <option value="Baixa">Baixa</option>
+                </select>
+            </div>
+
+            <textarea name="Descricao" placeholder="Descreva o problema detalhadamente..." required></textarea>
+
+            <button type="submit" class="btn-enviar">Confirmar Chamado</button>
+        </form>
+
+        <a href="/Dashboard/Index" class="btn-voltar">← Voltar</a>
+    </div>
+</div>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI';
+        background: #f5f8ff;
+    }
+
+    .top-bar {
+        background: #006eff;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .page-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 100px);
+    }
+
+    .form-card {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        width: 400px;
+        text-align: center;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+    }
+
+    .btn-enviar {
+        background: #006eff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        width: 100%;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .btn-enviar:hover {
+            background: #0056cc;
+        }
+
+    .btn-voltar {
+        text-decoration: none;
+        color: #6c757d;
+        font-weight: bold;
+    }
+</style>

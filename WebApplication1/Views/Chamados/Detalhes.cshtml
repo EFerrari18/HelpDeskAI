@@ -1,0 +1,112 @@
+﻿@model HelpDeskAI.Models.Chamado
+
+<header class="top-bar">
+    <h1>HelpDesk <span>AI</span></h1>
+</header>
+
+<div class="page-container">
+    <div class="detalhes-card">
+        <h2> Detalhes do Chamado</h2>
+
+        <p><strong>Título:</strong> @Model.Titulo</p>
+        <p><strong>Usuário:</strong> @Model.NomeUsuario</p>
+        <p><strong>Categoria:</strong> @Model.Categoria</p>
+        <p><strong>Prioridade:</strong> @Model.Prioridade</p>
+        <p><strong>Status:</strong> <span id="statusAtual" class="status">@Model.Status</span></p>
+        <p><strong>Descrição:</strong><br>@Model.Descricao</p>
+
+        <div class="status-update">
+            <select id="novoStatus">
+                <option>Pendente</option>
+                <option>Em andamento</option>
+                <option>Finalizado</option>
+            </select>
+            <button id="btnSalvar" data-id="@Model.Id" class="btn-salvar">💾 Salvar Alteração</button>
+        </div>
+
+        <a href="/Dashboard/Index" class="btn-voltar">← Voltar</a>
+    </div>
+</div>
+
+<div id="toast" class="toast"> Status atualizado com sucesso!</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#btnSalvar").click(function () {
+        const id = $(this).data("id");
+        const status = $("#novoStatus").val();
+        $.post("/Chamados/AtualizarStatus", { id, status })
+            .done(() => {
+                $("#statusAtual").text(status);
+                $("#toast").addClass("show");
+                setTimeout(() => $("#toast").removeClass("show"), 2000);
+            })
+            .fail(() => alert("Erro ao atualizar o status."));
+    });
+</script>
+
+<style>
+    body {
+        font-family: 'Segoe UI';
+        margin: 0;
+        background: #f5f8ff;
+    }
+
+    .top-bar {
+        background: #006eff;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .page-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 80px);
+    }
+
+    .detalhes-card {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        width: 450px;
+    }
+
+    .btn-salvar {
+        background: #006eff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+        .btn-salvar:hover {
+            background: #0056cc;
+        }
+
+    .btn-voltar {
+        text-decoration: none;
+        color: #6c757d;
+    }
+
+    .toast {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #28a745;
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        opacity: 0;
+        transition: 0.3s;
+    }
+
+        .toast.show {
+            opacity: 1;
+        }
+</style>
