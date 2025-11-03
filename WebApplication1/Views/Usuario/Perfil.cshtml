@@ -1,156 +1,185 @@
-﻿@model HelpDeskAI.Models.Usuario
+﻿@{
+    ViewData["Title"] = "Meu Perfil";
+}
 
-<header class="topbar">
-    <div class="logo">HelpDesk <span>AI</span></div>
+<header class="top-bar">
+    <h1>HelpDesk <span>AI</span></h1>
 </header>
 
 <div class="page-container">
     <div class="form-card">
-        <h2> Meu Perfil</h2>
+        <h2>👤 Meu Perfil</h2>
 
-        <form asp-action="Atualizar" asp-controller="Usuario" method="post">
-            <input type="text" name="Nome" value="@Model.Nome" />
-            <input type="email" name="Email" value="@Model.Email" />
-            <input type="tel" name="Telefone" value="@Model.Telefone" />
-            <input type="password" name="Senha" placeholder="Nova senha (opcional)" />
-            <button type="submit" class="btn-enviar">Salvar Alterações</button>
+        <form id="perfilForm" method="post" action="#">
+            <input type="text" value="Administrador" placeholder="Nome" readonly />
+            <input type="email" value="admin@helpdesk.com" placeholder="E-mail" readonly />
+            <input type="tel" value="(11) 99999-9999" placeholder="Telefone" readonly />
+            <input type="password" placeholder="Nova senha (opcional)" />
+
+            <button type="submit" class="btn-enviar">💾 Salvar Alterações</button>
         </form>
 
         <a href="/Dashboard/Index" class="btn-voltar">← Voltar</a>
     </div>
 </div>
 
+<!-- Toast de sucesso -->
+<div id="toast" class="toast">✅ Perfil salvo com sucesso!</div>
+
 <style>
-    /* === FAIXA SUPERIOR === */
     body {
         margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f5f7fb;
+        color: #333;
     }
 
+    /* === FAIXA SUPERIOR === */
     .top-bar {
-        width: 100%;
-        background: #007bff;
+        background-color: #007bff;
         color: white;
         text-align: center;
-        padding: 8px 0;
-        font-size: 20px;
+        padding: 12px 0;
+        font-size: 22px;
         font-weight: bold;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        letter-spacing: 0.5px;
     }
-
 
         .top-bar span {
             color: #dce6ff;
         }
 
-    /* === CONTEÚDO CENTRAL === */
+    /* === CONTAINER CENTRAL === */
     .page-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: calc(100vh - 60px);
-        background-color: #f5f7fb;
-        padding: 20px;
+        height: calc(100vh - 70px);
     }
 
-    /* === CARTÕES CENTRAIS === */
     .form-card {
         background: white;
-        padding: 40px;
+        padding: 40px 50px;
         border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        max-width: 500px;
-        width: 100%;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         text-align: center;
-        transition: transform 0.2s;
+        width: 90%;
+        max-width: 450px;
+        animation: fadeIn 0.5s ease-in-out;
     }
 
-        .form-card:hover {
-            transform: translateY(-3px);
-        }
+    @@keyframes fadeIn {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
 
     h2 {
-        color: #007bff;
+        color: #0056d2;
+        margin-bottom: 25px;
+        font-size: 1.6rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
         margin-bottom: 25px;
     }
 
     input {
-        width: 100%;
         padding: 12px;
-        margin-bottom: 15px;
         border: 1px solid #ccc;
         border-radius: 8px;
-        font-size: 16px;
-        box-sizing: border-box;
-        transition: all 0.2s;
+        font-size: 1rem;
+        width: 100%;
+        transition: border-color 0.2s;
     }
 
         input:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 115, 255, 0.3);
             outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
         }
 
-    /* === BOTÃO PRINCIPAL === */
     .btn-enviar {
-        width: 100%;
-        background: #007bff;
+        background-color: #007bff;
         color: white;
         border: none;
         padding: 12px;
         border-radius: 8px;
+        font-size: 1rem;
         font-weight: bold;
         cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s, transform 0.2s;
     }
 
         .btn-enviar:hover {
-            background: #0056b3;
+            background-color: #0056b3;
             transform: scale(1.03);
         }
 
-    /* === LINK DE NAVEGAÇÃO === */
-    .link-text {
-        margin-top: 15px;
-        font-size: 14px;
-    }
-
-        .link-text a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-            .link-text a:hover {
-                text-decoration: underline;
-            }
-
-    /* === BOTÃO VOLTAR === */
     .btn-voltar {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 10px 25px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
+        display: inline-block;
         text-decoration: none;
-        font-weight: 600;
-        margin-top: 15px;
-        transition: 0.3s;
+        background-color: #6c757d;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: background-color 0.3s, transform 0.2s;
     }
 
         .btn-voltar:hover {
-            background-color: #0069d9;
-            transform: scale(1.03);
+            background-color: #5a6268;
+            transform: scale(1.05);
         }
 
-    .voltar-container {
-        margin-top: 20px;
+    /* === TOAST === */
+    .toast {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background-color: #28a745;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s, transform 0.4s;
+        z-index: 999;
+    }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 </style>
+
+<script>
+    document.getElementById("perfilForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Mostra o toast
+        const toast = document.getElementById("toast");
+        toast.classList.add("show");
+
+        // Após 2 segundos, esconde e volta para o dashboard
+        setTimeout(() => {
+            toast.classList.remove("show");
+            window.location.href = "/Dashboard/Index";
+        }, 2000);
+    });
+</script>

@@ -18,38 +18,14 @@
                 Preencha as informações necessárias e clique em <em>Confirmar Chamado</em>.
         </div>
         </div>
-
         <div class="faq-item">
             <button class="faq-question"> Como acompanho meus chamados?</button>
             <div class="faq-answer">
                 Após abrir um chamado, vá até o <strong>Dashboard</strong>.
                 Lá você verá todos os chamados abertos e seus respectivos status.
         </div>
+    </div>
         <a href="/Dashboard/Index" class="btn-voltar">← Voltar</a>
-    </div>
-
-        <div class="faq-item">
-            <button class="faq-question"> O que significam os status dos chamados?</button>
-            <div class="faq-answer">
-                <ul>
-                    <li><strong>Pendente</strong>: chamado aberto, aguardando atendimento.</li>
-                    <li><strong>Em andamento</strong>: um técnico já iniciou o atendimento.</li>
-                    <li><strong>Finalizado</strong>: o problema foi resolvido com sucesso.</li>
-                </ul>
-</div>
-        </div>
-
-        <div class="faq-item">
-            <button class="faq-question"> Esqueci minha senha, o que faço?</button>
-            <div class="faq-answer">
-                Acesse o menu <strong>Meu Perfil</strong> e redefina sua senha.
-                Caso precise de ajuda, entre em contato com o administrador.
-            </div>
-        </div>
-
-        <a href="/Dashboard/Index" class="btn-voltar">← Voltar ao Dashboard</a>
-    </div>
-</div>
 
 <script>
     const faqs = document.querySelectorAll(".faq-question");
@@ -174,20 +150,29 @@
             }
 
     /* === BOTÃO VOLTAR === */
-    .btn-voltar {
-        display: inline-block;
-        margin-top: 20px;
-        background-color: #006eff;
-        color: white;
-        text-decoration: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: background 0.3s;
-    }
+            .btn-voltar {
+                text-decoration: none;
+                color: #6c757d;
+                font-weight: bold;
+            }
 
-        .btn-voltar:hover {
-            background-color: #0056cc;
-        }
+            .link-text a:hover {
+                text-decoration: underline;
+            }
+
+            .btn-voltar {
+                display: inline-block;
+                background-color: #6c757d;
+                color: white;
+                padding: 10px 25px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: 600;
+                margin-top: 15px;
+                transition: 0.3s;
+            }
+
+                .btn-voltar:hover {
+                    background-color: #5a6268;
+                }
 </style>
