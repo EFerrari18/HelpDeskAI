@@ -20,21 +20,21 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="dashboard-content">
-        <h1>📊 Dashboard de Chamados</h1>
+        <h1> Dashboard de Chamados</h1>
 
         <div class="dashboard-grid">
             <!-- CARDS -->
             <div class="cards">
                 <div class="card pendente">
-                <h2>Pendentes</h2>
+                    <h3>Pendentes</h3>
                     <p>@ViewBag.Pendentes</p>
                 </div>
                 <div class="card andamento">
-                <h2>Em Andamento</h2>
+                    <h3>Em Andamento</h3>
                     <p>@ViewBag.Andamento</p>
                 </div>
                 <div class="card finalizado">
-                <h2>Finalizados</h2>
+                    <h3>Finalizados</h3>
                     <p>@ViewBag.Finalizados</p>
                 </div>
             </div>
@@ -46,7 +46,7 @@
 
             <!-- TABELA -->
             <div class="tabela-container">
-                <h2>📋 Chamados</h2>
+                <h2> Chamados</h2>
                 <table class="tabela-chamados">
                     <thead>
                         <tr>
@@ -93,16 +93,14 @@
         },
         options: {
             responsive: true,
-            plugins: {
-                legend: { position: 'bottom' }
-        }
+            plugins: { legend: { position: 'bottom' } }
         }
     });
 </script>
 
 <style>
     body {
-        font-family: 'Segoe UI';
+        font-family: 'Segoe UI', sans-serif;
         margin: 0;
         background: #f5f8ff;
         overflow: hidden; /* ❌ sem rolagem */
@@ -112,26 +110,29 @@
         background: #006eff;
         color: white;
         text-align: center;
-        padding: 15px 0;
-        font-size: 24px;
-        font-weight: bold;
+        padding: 10px 0;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
     }
 
     .dashboard-container {
         display: flex;
-        height: calc(100vh - 80px);
+        height: calc(100vh - 50px);
     }
 
     .sidebar {
-        width: 240px;
+        width: 180px;
         background: white;
         padding: 20px;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     }
 
         .sidebar nav a {
             display: block;
-            padding: 12px;
+            margin-bottom: 15px;
+            padding: 10px;
             text-decoration: none;
             color: #333;
             border-radius: 8px;
@@ -150,7 +151,10 @@
 
     .dashboard-content {
         flex: 1;
-        padding: 30px;
+        padding: 15px 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     h1 {
@@ -172,40 +176,116 @@
     /* === CARDS === */
     .cards {
         display: flex;
-        gap: 20px;
-        margin-bottom: 30px;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .card {
-        flex: 1;
-        background: white;
+        width: 220px;
+        padding: 10px;
         border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        padding: 20px;
         text-align: center;
         font-weight: bold;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         font-size: 14px;
     }
 
-    .pendente {
-        background: #ffe5e5;
-        color: #ff5c5c;
+        .card.pendente {
+            background-color: #ffe6e6;
+            color: #ff4d4d;
         }
 
-    .andamento {
-        background: #fff3cd;
-        color: #e6a800;
+        .card.andamento {
+            background-color: #fff3cd;
+            color: #d39e00;
         }
 
-    .finalizado {
-        background: #d4edda;
+        .card.finalizado {
+            background-color: #d4edda;
             color: #28a745;
         }
 
     /* === GRÁFICO === */
     .chart-container {
-        width: 400px;
-        margin: 0 auto;
+        width: 280px;
+        height: 280px;
+    }
+
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+    /* === TABELA === */
+    .tabela-container {
+        width: 100%;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        font-size: 13px;
+    }
+
+        .tabela-container h2 {
+            font-size: 16px;
+            color: #007bff;
+            margin: 0 0 5px 0;
+            text-align: center;
+        }
+
+    .tabela-chamados {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .tabela-chamados th {
+            background: #007bff;
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .tabela-chamados td {
+            padding: 6px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+    .btn-detalhes {
+        background: #007bff;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 12px;
+        transition: 0.2s;
+    }
+
+        .btn-detalhes:hover {
+            background: #0056b3;
+        }
+
+    /* === STATUS === */
+    .status {
+        padding: 2px 6px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+        .status.pendente {
+            background: #ffd6d6;
+            color: #ff4d4d;
+        }
+
+        .status.em-andamento {
+            background: #fff2b3;
+            color: #d39e00;
+        }
+
+        .status.finalizado {
+            background: #c6f5cb;
+            color: #28a745;
         }
 </style>
