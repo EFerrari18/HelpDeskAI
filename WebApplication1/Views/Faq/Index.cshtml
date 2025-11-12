@@ -1,42 +1,29 @@
-﻿@{
-    ViewData["Title"] = "FAQ - Perguntas Frequentes";
+﻿@model HelpDeskAI.Models.FaqPergunta
+@{
+    ViewData["Title"] = "FAQ Inteligente - HelpDeskAI";
 }
-
 <header class="top-bar">
     <h1>HelpDesk <span>AI</span></h1>
 </header>
 
-<div class="faq-container">
-    <div class="faq-card">
-        <h2> Perguntas Frequentes</h2>
-        <p class="descricao">Aqui você encontra respostas rápidas sobre o sistema HelpDesk AI.</p>
+<div style="max-width:600px;margin:40px auto;padding:30px;background:white;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);font-family:Arial, sans-serif;">
+    <h2 style="text-align:center;color:#0078d7;">FAQ Inteligente 🤖</h2>
+    <p style="text-align:center;color:gray;">Digite sua dúvida abaixo e receba uma resposta instantânea da IA.</p>
 
-        <div class="faq-item">
-            <button class="faq-question"> Como abro um novo chamado?</button>
-            <div class="faq-answer">
-                Vá até o menu lateral e clique em <strong>“Abrir Chamado”</strong>.
-                Preencha as informações necessárias e clique em <em>Confirmar Chamado</em>.
-        </div>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question"> Como acompanho meus chamados?</button>
-            <div class="faq-answer">
-                Após abrir um chamado, vá até o <strong>Dashboard</strong>.
-                Lá você verá todos os chamados abertos e seus respectivos status.
-        </div>
-    </div>
-        <a href="/Dashboard/Index" class="btn-voltar">← Voltar</a>
+    <form method="post" style="margin-top:20px;">
+        <label for="Pergunta" style="font-weight:bold;">Pergunta:</label>
+        <textarea name="Pergunta" rows="3" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;margin-top:8px;">@Model.Pergunta</textarea>
+        <button type="submit" style="margin-top:12px;background:#0078d7;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;">Enviar</button>
+    </form>
 
-<script>
-    const faqs = document.querySelectorAll(".faq-question");
-    faqs.forEach(faq => {
-        faq.addEventListener("click", () => {
-            faq.classList.toggle("active");
-            const answer = faq.nextElementSibling;
-            answer.style.maxHeight = answer.style.maxHeight ? null : answer.scrollHeight + "px";
-        });
-    });
-</script>
+    @if (!string.IsNullOrEmpty(Model.Resposta))
+    {
+        <div style="margin-top:20px;padding:15px;background:#f3f4f6;border-radius:8px;">
+            <h4 style="color:#0078d7;">💬 Resposta da IA:</h4>
+            <p style="white-space:pre-line;">@Model.Resposta</p>
+        </div>
+    }
+</div>
 
 <style>
     /* === FAIXA SUPERIOR === */

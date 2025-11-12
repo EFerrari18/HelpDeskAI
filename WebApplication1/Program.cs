@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using HelpDeskAI.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Adiciona suporte a MVC (controllers + views)
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient<GeminiService>();
+// já tem builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
