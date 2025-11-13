@@ -1,165 +1,341 @@
-﻿@model HelpDeskAI.Models.FaqPergunta
-@{
-    ViewData["Title"] = "FAQ Inteligente - HelpDeskAI";
-}
-<header class="top-bar">
-    <h1>HelpDesk <span>AI</span></h1>
-</header>
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Inteligente - HelpDesk AI</title>
 
-<div style="max-width:600px;margin:40px auto;padding:30px;background:white;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);font-family:Arial, sans-serif;">
-    <h2 style="text-align:center;color:#0078d7;">FAQ Inteligente </h2>
-    <p style="text-align:center;color:gray;">Digite sua dúvida abaixo e receba uma resposta instantânea da IA.</p>
-
-    <form method="post" style="margin-top:20px;">
-        <label for="Pergunta" style="font-weight:bold;">Pergunta:</label>
-        <textarea name="Pergunta" rows="3" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;margin-top:8px;">@Model.Pergunta</textarea>
-        <button type="submit" style="margin-top:12px;background:#0078d7;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;">Enviar</button>
-    </form>
-
-    @if (!string.IsNullOrEmpty(Model.Resposta))
-    {
-        <div style="margin-top:20px;padding:15px;background:#f3f4f6;border-radius:8px;">
-            <h4 style="color:#0078d7;"> Resposta da IA:</h4>
-            <p style="white-space:pre-line;">@Model.Resposta</p>
-        </div>
-    }
-</div>
-
-<style>
-    /* === FAIXA SUPERIOR === */
-    body {
-        margin: 0;
-        font-family: "Segoe UI", sans-serif;
-        background-color: #f5f8ff;
-        color: #333;
-    }
-
-    .top-bar {
-        background-color: #006eff;
-        color: white;
-        text-align: center;
-        padding: 18px 0;
-        font-size: 26px;
-        font-weight: 700;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        letter-spacing: 0.5px;
-        margin-top: 0; /* colado no topo */
-    }
-
-
-        .top-bar span {
-            font-weight: 900;
-            color: #dce6ff;
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f7;
         }
 
-    .faq-container {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        min-height: calc(100vh - 100px);
-        padding: 40px 20px;
-    }
-
-    .faq-card {
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 6px 25px rgba(0,0,0,0.1);
-        padding: 40px 50px;
-        max-width: 700px;
-        width: 100%;
-        text-align: center;
-        transition: transform 0.2s;
-    }
-
-        .faq-card h2 {
-            color: #006eff;
+        /* Header */
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 25px;
             text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: bold;
         }
 
-        .faq-card .descricao {
+        /* Card */
+        .card {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.12);
             text-align: center;
-            color: #666;
-            font-size: 1rem;
-        margin-bottom: 25px;
-    }
-
-    .faq-item {
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 16px;
-        box-sizing: border-box;
-        transition: all 0.2s;
-    }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 115, 255, 0.3);
-            outline: none;
         }
 
-    .faq-question {
-        width: 100%;
-        background-color: #f0f4ff;
-        color: #0056cc;
-        font-weight: bold;
-        border: none;
-        padding: 12px;
-        border-radius: 8px;
-        padding: 15px;
-        text-align: left;
-        cursor: pointer;
-        transition: background 0.3s;
-        font-size: 1rem;
+        h2 {
+            margin-bottom: 20px;
+            color: #0B1C47;
         }
 
-        .faq-question:hover {
-            background-color: #dceaff;
-    }
-
-    .faq-answer {
-        background-color: #f9faff;
-        border-left: 4px solid #006eff;
-        margin-top: 5px;
-        padding: 0 15px;
-        border-radius: 0 0 8px 8px;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
+        /* Inputs */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        .faq-answer p, .faq-answer ul {
-            margin: 10px 0;
-            color: #444;
-            font-size: 0.95rem;
-            }
-
-    /* === BOTÃO VOLTAR === */
-            .btn-voltar {
-                text-decoration: none;
-                color: #6c757d;
-                font-weight: bold;
-            }
-
-            .link-text a:hover {
-                text-decoration: underline;
-            }
-
-            .btn-voltar {
-                display: inline-block;
-                background-color: #6c757d;
-                color: white;
-                padding: 10px 25px;
+            .input-group input {
+                flex: 1;
+                padding: 12px;
+                font-size: 16px;
+                border: 2px solid #007bff;
                 border-radius: 8px;
-                text-decoration: none;
-                font-weight: 600;
-                margin-top: 15px;
+            }
+
+            .input-group button {
+                background: #007bff;
+                color: white;
+                border: none;
+                padding: 12px 18px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: bold;
                 transition: 0.3s;
             }
 
-                .btn-voltar:hover {
-                    background-color: #5a6268;
+                .input-group button:hover {
+                    background: #005fcc;
                 }
-</style>
+
+        /* Answer */
+        .typing {
+            display: none;
+            font-style: italic;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        .response {
+            margin-top: 20px;
+            padding: 20px;
+            background: #eef2f7;
+            border-left: 6px solid #007bff;
+            border-radius: 12px;
+            text-align: left;
+            display: none;
+            animation: fade .4s ease-in-out;
+        }
+
+        @@keyframes fade {
+            from
+
+        {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+
+        }
+
+        /* Botão Voltar */
+        .btn-voltar {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 22px;
+            background: #6c757d;
+            color: white;
+            font-size: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+            .btn-voltar:hover {
+                background: #555;
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">HelpDesk AI</div>
+
+    <div class="card">
+
+        <h2>FAQ Inteligente (Assistente Virtual)</h2>
+
+        <div class="input-group">
+            <input id="pergunta" type="text" placeholder="Digite sua dúvida...">
+            <button onclick="buscarResposta()">Perguntar</button>
+        </div>
+
+        <p id="digitando" class="typing">Assistente digitando...</p>
+
+        <div id="respostaBox" class="response">
+            <p id="respostaTexto"></p>
+        </div>
+
+        <a href="/Dashboard/Index" class="btn-voltar">← Voltar</a>
+
+    </div>
+
+    <script>
+        /* SUPER BASE DE CONHECIMENTO — expandida */
+        const baseConhecimento = [
+
+            /* Chamados */
+            {
+                palavras: ["abrir chamado", "novo chamado", "registrar", "como abrir"],
+                resposta: `
+                Claro! Veja como abrir um chamado:<br><br>
+                1️⃣ Menu <strong>Novo Chamado</strong><br>
+                2️⃣ Preencha título, descrição, prioridade<br>
+                3️⃣ Anexe imagens se quiser<br>
+                4️⃣ Clique em <strong>Enviar Chamado</strong><br><br>
+                Dica : descreva o problema com o máximo de detalhes para agilizar!`
+            },
+
+            {
+                palavras: ["acompanhar", "meus chamados", "status", "andamento"],
+                resposta: `
+                Para acompanhar seu chamado:<br><br>
+                • Acesse <strong>Meus Chamados</strong><br>
+                • Veja o status atual:<br>
+                &nbsp;&nbsp; Aberto<br>
+                &nbsp;&nbsp; Em Atendimento<br>
+                &nbsp;&nbsp; Resolvido<br>
+                &nbsp;&nbsp; Fechado<br><br>
+                O histórico completo aparece dentro do chamado.`
+            },
+
+            {
+                palavras: ["encerrar", "fechar", "finalizar chamado"],
+                resposta: `
+                Para encerrar:<br><br>
+                ✔ O técnico marca como <strong>Resolvido</strong><br>
+                ✔ Você verifica<br>
+                ✔ O sistema finaliza como <strong>Fechado</strong><br><br>
+                Caso não esteja resolvido, é possível reabrir.`
+            },
+
+            /* Perfil */
+            {
+                palavras: ["perfil", "alterar", "editar perfil", "trocar dados"],
+                resposta: `
+                Para editar seu perfil:<br><br>
+                • Vá em <strong>Meu Perfil</strong><br>
+                • Altere nome, e-mail, telefone ou senha<br>
+                • Clique em <strong>Salvar Alterações</strong><br><br>
+                Mudanças são aplicadas automaticamente.`
+            },
+
+            /* Senha */
+            {
+                palavras: ["senha", "esqueci", "recuperar senha", "resetar"],
+                resposta: `
+                Para recuperar sua senha:<br><br>
+                1️⃣ Clique em <strong>Esqueci minha senha</strong><br>
+                2️⃣ Digite seu e-mail<br>
+                3️⃣ Aguarde o link de redefinição<br><br>
+                Se não chegar, verifique o spam.`
+            },
+
+            /* IA e FAQ */
+            {
+                palavras: ["ia", "faq", "inteligencia", "robot", "como funciona"],
+                resposta: `
+                Eu funciono assim :<br><br>
+                • Leio sua pergunta<br>
+                • Identifico palavras-chave<br>
+                • Busco a resposta mais compatível<br>
+                • Envio uma resposta natural<br><br>
+                Posso ser integrado ao <strong>Gemini AI</strong> ou <strong>OpenAI</strong>.`
+            },
+
+            /* Técnico */
+            {
+                palavras: ["técnico", "quem atende", "responsável", "especialidade"],
+                resposta: `
+                A escolha do técnico é automática:<br><br>
+                ✔ Especialidade adequada<br>
+                ✔ Menor fila de atendimento<br>
+                ✔ Histórico de chamados parecidos<br><br>
+                Isso garante atendimento mais rápido.`
+            },
+
+            /* Dashboard */
+            {
+                palavras: ["dashboard", "estatísticas", "gráficos", "relatórios"],
+                resposta: `
+                O dashboard mostra:<br><br>
+                 Chamados por status<br>
+                 Chamados por dia<br>
+                 Produtividade dos técnicos<br>
+                 Tempo médio de resolução<br><br>
+                Tudo calculado em tempo real.`
+            },
+
+            /* FAQ */
+            {
+                palavras: ["faq inteligente", "sobre faq", "perguntas", "ajuda"],
+                resposta: `
+                O FAQ Inteligente serve para:<br><br>
+                • Responder dúvidas automaticamente<br>
+                • Reduzir tempo de suporte<br>
+                • Guiar novos usuários no sistema<br>
+                • Sugerir soluções comuns de forma instantânea`
+            },
+
+            /* Notificações */
+            {
+                palavras: ["notificação", "aviso", "alerta", "email"],
+                resposta: `
+                As notificações são enviadas quando:<br><br>
+                ✔ Um técnico assume seu chamado<br>
+                ✔ Seu chamado muda de status<br>
+                ✔ Um chamado é resolvido<br><br>
+                Você pode ativar/desativar avisos no perfil.`
+            },
+
+            /* Arquivos */
+            {
+                palavras: ["anexo", "arquivo", "documento", "foto"],
+                resposta: `
+                Você pode anexar:<br><br>
+                • Imagens (PNG/JPG)<br>
+                • PDFs<br>
+                • Documentos até 10MB<br><br>
+                Os técnicos visualizam em tempo real.`
+            },
+
+            /* Prioridade */
+            {
+                palavras: ["prioridade", "urgente", "alto", "baixo"],
+                resposta: `
+                As prioridades são:<br><br>
+                🔴 Alta – sistemas fora do ar<br>
+                🟠 Média – funções importantes afetadas<br>
+                🟢 Baixa – dúvidas ou pequenas correções<br><br>
+                O técnico responde conforme a fila.`
+            },
+
+            /* Login */
+            {
+                palavras: ["login", "entrar", "acessar"],
+                resposta: `
+                Para acessar o sistema:<br><br>
+                • Use e-mail + senha cadastrados<br>
+                • Sua senha fica criptografada<br>
+                • 3 tentativas incorretas bloqueiam temporariamente<br><br>
+                Segurança sempre em primeiro lugar 🔒`
+            },
+
+            /* Geral */
+            {
+                palavras: ["suporte", "ajuda", "como usar", "manual"],
+                resposta: `
+                Aqui vai ajuda geral:<br><br>
+                ✔ Navegue pelo menu lateral<br>
+                ✔ Cada área tem instruções próprias<br>
+                ✔ O FAQ cobre dúvidas comuns<br>
+                ✔ Você pode abrir um chamado quando precisar<br><br>
+                Estou aqui para ajudar! `
+            }
+
+        ];
+
+
+        /* FUNÇÃO PRINCIPAL — IA RESPONDENDO */
+        function buscarResposta() {
+            const pergunta = document.getElementById("pergunta").value.toLowerCase().trim();
+            const digitando = document.getElementById("digitando");
+            const respostaBox = document.getElementById("respostaBox");
+            const respostaTexto = document.getElementById("respostaTexto");
+
+            respostaBox.style.display = "none";
+            digitando.style.display = "block";
+
+            setTimeout(() => {
+                let respostaFinal = "Ainda não encontrei uma resposta exata 🤔<br>Se quiser, tente escrever de outra forma!";
+
+                baseConhecimento.forEach(item => {
+                    item.palavras.forEach(p => {
+                        if (pergunta.includes(p)) respostaFinal = item.resposta;
+                    });
+                });
+
+                digitando.style.display = "none";
+                respostaTexto.innerHTML = respostaFinal;
+                respostaBox.style.display = "block";
+
+            }, 900);
+        }
+    </script>
+
+</body>
+</html>

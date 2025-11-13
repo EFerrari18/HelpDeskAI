@@ -47,6 +47,16 @@
             <!-- TABELA -->
             <div class="tabela-container">
                 <h2> Chamados</h2>
+
+                @using System.Linq;
+                @{
+                    var chamadosOrdenados = Model.OrderBy(c =>
+                    c.Prioridade != null && c.Prioridade.ToLower().Contains("alta") ? 1 :
+                    c.Prioridade != null && c.Prioridade.ToLower().Contains("méd") ? 2 :
+                    3
+                    );
+                }
+
                 <table class="tabela-chamados">
                     <thead>
                         <tr>
@@ -59,7 +69,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var chamado in Model)
+                        @foreach (var chamado in chamadosOrdenados)
                         {
                             <tr>
                                 <td>@chamado.Id</td>
@@ -67,7 +77,9 @@
                                 <td>@chamado.Categoria</td>
                                 <td>@chamado.Prioridade</td>
                                 <td>
-                                    <span class="status @chamado.Status.ToLower().Replace(" ", "-")">@chamado.Status</span>
+                                    <span class="status @chamado.Status.ToLower().Replace(" ", "-")">
+                                        @chamado.Status
+                                    </span>
                                 </td>
                                 <td><a href="/Chamados/Detalhes/@chamado.Id" class="btn-detalhes">Ver</a></td>
                             </tr>
@@ -75,6 +87,7 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
     </main>
 </div>
