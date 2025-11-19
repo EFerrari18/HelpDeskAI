@@ -1,0 +1,153 @@
+﻿@model IEnumerable<HelpDeskAI.Models.Chamado>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Meus Chamados - HelpDesk AI</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #f1f4fa;
+            font-family: 'Segoe UI';
+        }
+
+        .topbar {
+            background: #007bff;
+            padding: 22px 0;
+            text-align: center;
+            font-size: 32px;
+            color: white;
+            font-weight: 800;
+        }
+
+        .wrapper {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: white;
+            padding: 25px;
+            box-shadow: 3px 0 12px rgba(0,0,0,0.1);
+        }
+
+            .sidebar a {
+                display: block;
+                padding: 12px;
+                background: #f6f7fb;
+                margin-bottom: 10px;
+                border-radius: 10px;
+                font-weight: bold;
+                text-decoration: none;
+                color: #333;
+            }
+
+                .sidebar a:hover {
+                    background: #007bff;
+                    color: white;
+                }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .card {
+            width: 90%;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .btn-ver {
+            background: #007bff;
+            padding: 6px 14px;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+            .btn-ver:hover {
+                background: #005fcc;
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">HelpDesk AI</div>
+
+    <div class="wrapper">
+
+        <aside class="sidebar">
+            <a href="/Dashboard/Index">Dashboard</a>
+            <a href="/Chamados/Index">Meus Chamados</a>
+            <a href="/Chamados/Abrir">Abrir Chamado</a>
+            <a href="/Faq/Index">FAQ</a>
+            <a href="/Usuario/Perfil">Meu Perfil</a>
+            <a href="/Usuario/Login" style="color:#c0392b;">Sair</a>
+        </aside>
+
+        <main class="content">
+
+            <div class="card">
+                <h1 style="text-align:center;color:#007bff;">Meus Chamados</h1>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var c in Model)
+                        {
+                            <tr>
+                                <td>@c.Id</td>
+                                <td>@c.Titulo</td>
+                                <td>@c.Categoria</td>
+                                <td>@c.Status</td>
+                                <td><a class="btn-ver" href="/Dashboard/Detalhes/@c.Id">Ver</a></td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

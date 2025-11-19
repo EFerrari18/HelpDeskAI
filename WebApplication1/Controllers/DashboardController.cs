@@ -1,36 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using HelpDeskAI.Models;
-using System.Collections.Generic;
-using System.Linq;
+﻿using HelpDeskAI.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HelpDeskAI.Controllers
 {
     public class DashboardController : Controller
     {
-        //  "Banco de dados" em memória
-        private static List<Chamado> chamados = new List<Chamado>();
+        private readonly ApplicationDbContext _context;
 
-        //  Acesso global para outros controllers
-        public static List<Chamado> GetChamados() => chamados;
-
-        public static void AdicionarChamado(Chamado chamado)
+        public DashboardController(ApplicationDbContext context)
         {
-            chamado.Id = chamados.Count + 1;
-            chamados.Add(chamado);
+            _context = context;
         }
 
-        //  Exibe dashboard com gráfico
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            int pendentes = chamados.Count(c => c.Status == "Pendente");
-            int andamento = chamados.Count(c => c.Status == "Em andamento");
-            int finalizados = chamados.Count(c => c.Status == "Finalizado");
+            ViewBag.Pendentes = await _context.Chamado.CountAsync(c => c.Status == "Aberto");
+            ViewBag.Andamento = await _context.Chamado.CountAsync(c => c.Status == "Em andamento");
+            ViewBag.Finalizados = await _context.Chamado.CountAsync(c => c.Status == "Finalizado");
 
-            ViewBag.Pendentes = pendentes;
-            ViewBag.Andamento = andamento;
-            ViewBag.Finalizados = finalizados;
+            var lista = await _context.Chamado
+                .OrderByDescending(c => c.DataAbertura)
+                .Take(10)
+                .ToListAsync();
 
-            return View(chamados);
+            return View(lista);
         }
     }
 }

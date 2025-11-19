@@ -11,18 +11,85 @@ body {
 
 /* ====== TOPO ====== */
 .topbar {
-    background: #007bff;
+    background: #0077ff;
+    padding: 22px 0;
     color: white;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 20px;
-    font-weight: bold;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    font-size: 32px;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 
 .logo span {
     color: #ffd700;
     }
+
+.sidebar {
+    width: 230px;
+    background: #ffffff;
+    padding: 25px 15px;
+    box-shadow: 3px 0px 15px rgba(0,0,0,0.10);
+    border-right: 1px solid #eee;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 80px;
+}
+
+.sidebar a {
+    display: block;
+    background: #f5f7fc;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+    .sidebar a:hover {
+        background: #0077ff;
+        color: #fff;
+    }
+
+.sidebar .logout {
+    color: #d9534f !important;
+    font-weight: bold;
+}
+
+    .sidebar .logout:hover {
+        background: #ffdddd;
+        color: #c9302c !important;
+    }
+
+
+/* AJUSTE PARA O CONTEÚDO NÃO FICAR POR BAIXO DO MENU */
+.content {
+    margin-left: 260px !important;
+}
+
+
+/* CARD PADRÃO */
+.card {
+    background: #fff;
+    padding: 35px;
+    border-radius: 18px;
+    width: 900px;
+    margin: auto;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+}
+
+/* TÍTULO */
+h1 {
+    text-align: center;
+    color: #0077ff;
+    font-size: 32px;
+    margin-bottom: 25px;
+}
 
 /* ====== CONTAINER CENTRAL ====== */
 .page-container {

@@ -1,185 +1,199 @@
-﻿@{
-    ViewData["Title"] = "Meu Perfil";
-}
+﻿@model HelpDeskAI.Models.Usuario
 
-<header class="top-bar">
-    <h1>HelpDesk <span>AI</span></h1>
-</header>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Meu Perfil - HelpDesk AI</title>
 
-<div class="page-container">
-    <div class="form-card">
-        <h2>👤 Meu Perfil</h2>
+    <style>
+        body {
+            background: #f2f4fa;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-        <form id="perfilForm" method="post" action="#">
-            <input type="text" value="Administrador" placeholder="Nome" readonly />
-            <input type="email" value="admin@helpdesk.com" placeholder="E-mail" readonly />
-            <input type="tel" value="(11) 99999-9999" placeholder="Telefone" readonly />
-            <input type="password" placeholder="Nova senha (opcional)" />
+        /* TOPBAR */
+        .topbar {
+            background: #0077ff;
+            padding: 22px 0;
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+        }
 
-            <button type="submit" class="btn-enviar">💾 Salvar Alterações</button>
-        </form>
+        /* LAYOUT */
+        .wrapper {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
 
-        <a href="/Dashboard/Index" class="btn-voltar">← Voltar</a>
+        /* SIDEBAR */
+        .sidebar {
+            width: 220px;
+            background: white;
+            padding: 25px;
+            box-shadow: 3px 0px 10px rgba(0,0,0,0.15);
+        }
+
+            .sidebar a {
+                display: block;
+                padding: 12px;
+                margin-bottom: 15px;
+                background: #f6f7fb;
+                text-decoration: none;
+                border-radius: 10px;
+                font-weight: bold;
+                color: #333;
+                transition: .2s;
+            }
+
+                .sidebar a:hover {
+                    background: #0077ff;
+                    color: white;
+                }
+
+        .logout {
+            color: #d9534f !important;
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            padding: 35px;
+            overflow-y: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            width: 600px;
+            margin: auto;
+            box-shadow: 0px 6px 20px rgba(0,0,0,0.10);
+        }
+
+        h1 {
+            color: #0077ff;
+            font-size: 28px;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        label {
+            font-weight: bold;
+            color: #505050;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #dcdcdc;
+            background: #fafafa;
+            margin-bottom: 18px;
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background: #0077ff;
+            padding: 12px;
+            border-radius: 12px;
+            color: white;
+            border: none;
+            width: 100%;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .btn-primary:hover {
+                background: #005fcc;
+            }
+
+        .btn-back {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            background: #6c757d;
+            padding: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+            .btn-back:hover {
+                background: #545b62;
+            }
+
+        .msg-sucesso {
+            background: #d4edda;
+            border-left: 6px solid #28a745;
+            color: #1e7e34;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">HelpDesk AI</div>
+
+    <div class="wrapper">
+
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+            <a href="/Dashboard/Index">Dashboard</a>
+            <a href="/Chamados/Index">Meus Chamados</a>
+            <a href="/Chamados/Abrir">Abrir Chamado</a>
+            <a href="/Faq/Index">FAQ Inteligente</a>
+            <a href="/Usuario/Perfil">Meu Perfil</a>
+            <a href="/Usuario/Login" class="logout">Sair</a>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="content">
+
+            <div class="card">
+
+                <h1>Meu Perfil</h1>
+
+                @if (TempData["Sucesso"] != null)
+                {
+                    <div class="msg-sucesso">@TempData["Sucesso"]</div>
+                }
+
+                <form asp-action="AtualizarPerfil" method="post">
+
+                    <label>Nome</label>
+                    <input class="form-control" asp-for="Nome" />
+
+                    <label>Email</label>
+                    <input class="form-control" asp-for="Email" />
+
+                    <label>Telefone</label>
+                    <input class="form-control" asp-for="Telefone" placeholder="Opcional" />
+
+                    <label>Nova Senha (opcional)</label>
+                    <input type="password" name="NovaSenha" class="form-control" placeholder="Digite para alterar" />
+
+                    <button class="btn-primary">Atualizar Perfil</button>
+
+
+                </form>
+
+            </div>
+
+        </main>
+
     </div>
-</div>
 
-<!-- Toast de sucesso -->
-<div id="toast" class="toast">✅ Perfil salvo com sucesso!</div>
-
-<style>
-    body {
-        margin: 0;
-        font-family: "Segoe UI", sans-serif;
-        background-color: #f5f7fb;
-        color: #333;
-    }
-
-    /* === FAIXA SUPERIOR === */
-    .top-bar {
-        background-color: #007bff;
-        color: white;
-        text-align: center;
-        padding: 12px 0;
-        font-size: 22px;
-        font-weight: bold;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-        letter-spacing: 0.5px;
-    }
-
-        .top-bar span {
-            color: #dce6ff;
-        }
-
-    /* === CONTAINER CENTRAL === */
-    .page-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: calc(100vh - 70px);
-    }
-
-    .form-card {
-        background: white;
-        padding: 40px 50px;
-        border-radius: 15px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        text-align: center;
-        width: 90%;
-        max-width: 450px;
-        animation: fadeIn 0.5s ease-in-out;
-    }
-
-    @@keyframes fadeIn {
-        from
-
-    {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    }
-
-    h2 {
-        color: #0056d2;
-        margin-bottom: 25px;
-        font-size: 1.6rem;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-bottom: 25px;
-    }
-
-    input {
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 1rem;
-        width: 100%;
-        transition: border-color 0.2s;
-    }
-
-        input:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
-        }
-
-    .btn-enviar {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 12px;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-
-        .btn-enviar:hover {
-            background-color: #0056b3;
-            transform: scale(1.03);
-        }
-
-    .btn-voltar {
-        display: inline-block;
-        text-decoration: none;
-        background-color: #6c757d;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-
-        .btn-voltar:hover {
-            background-color: #5a6268;
-            transform: scale(1.05);
-        }
-
-    /* === TOAST === */
-    .toast {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background-color: #28a745;
-        color: white;
-        padding: 15px 25px;
-        border-radius: 8px;
-        font-weight: bold;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.4s, transform 0.4s;
-        z-index: 999;
-    }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-</style>
-
-<script>
-    document.getElementById("perfilForm").addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        // Mostra o toast
-        const toast = document.getElementById("toast");
-        toast.classList.add("show");
-
-        // Após 2 segundos, esconde e volta para o dashboard
-        setTimeout(() => {
-            toast.classList.remove("show");
-            window.location.href = "/Dashboard/Index";
-        }, 2000);
-    });
-</script>
+</body>
+</html>

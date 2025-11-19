@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebApplication1.Views.Chamados
+namespace WebApplication1.Views.Usuario
 {
-    public class TabelaModel : PageModel
+    public class ExcluirModel : PageModel
     {
         public void OnGet()
         {

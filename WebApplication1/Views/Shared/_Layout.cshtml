@@ -1,19 +1,203 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HelpDesk AI</title>
-    <link rel="stylesheet" href="~/css/style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f2f4fa;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ======== TOPBAR ======== */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 240px;
+            right: 0;
+            height: 70px;
+            background: #0077ff;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        /* ======== SIDEBAR ======== */
+        .sidebar {
+            width: 240px;
+            background: #ffffff;
+            padding: 25px;
+            height: 100vh;
+            box-shadow: 3px 0 15px rgba(0,0,0,0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .sidebar-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0077ff;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 13px;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            background: #f6f7fb;
+            font-weight: 600;
+            text-decoration: none;
+            color: #333;
+            transition: 0.2s;
+        }
+
+            .menu-item:hover {
+                background: #0077ff;
+                color: #ffffff;
+            }
+
+            .menu-item span {
+                margin-right: 12px;
+                font-size: 22px;
+            }
+
+        .logout {
+            color: #d9534f !important;
+        }
+
+        /* ======== CONTENT ======== */
+        .content {
+            margin-left: 240px;
+            padding: 110px 40px 40px 40px;
+            width: calc(100% - 240px);
+        }
+
+        /* ======== RESPONSIVE ======== */
+        @@media(max - width: 900px)
+
+        {
+            .sidebar
+
+        {
+            width: 210px;
+        }
+
+        .topbar {
+            left: 210px;
+        }
+
+        .content {
+            margin-left: 210px;
+        }
+
+        }
+
+        @@media(max - width: 700px)
+
+        {
+            .sidebar
+
+        {
+            position: fixed;
+            left: -250px;
+            transition: 0.3s;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .topbar {
+            left: 0;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+
+        .content {
+            margin-left: 0;
+            padding-top: 90px;
+        }
+
+        }
+
+        .menu-toggle {
+            font-size: 30px;
+            margin-right: 15px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-title">HelpDesk AI</div>
+
+        <a href="/Dashboard/Index" class="menu-item">
+            <span class="material-symbols-rounded">dashboard</span> Dashboard
+        </a>
+
+        <a href="/Chamados/MeusChamados" class="menu-item">
+            <span class="material-symbols-rounded">list_alt</span> Meus Chamados
+        </a>
+
+        <a href="/Chamados/Abrir" class="menu-item">
+            <span class="material-symbols-rounded">add_circle</span> Abrir Chamado
+        </a>
+
+        <a href="/Faq/Index" class="menu-item">
+            <span class="material-symbols-rounded">help</span> FAQ Inteligente
+        </a>
+
+        <a href="/Usuario/Perfil" class="menu-item">
+            <span class="material-symbols-rounded">person</span> Meu Perfil
+        </a>
+
+        <a href="/Usuario/Login" class="menu-item logout">
+            <span class="material-symbols-rounded">logout</span> Sair
+        </a>
+    </aside>
+
+    <!-- TOPBAR -->
     <header class="topbar">
-        <div class="logo">HelpDesk <span>AI</span></div>
+        <span class="menu-toggle" onclick="toggleMenu()"></span>
+        HelpDesk AI
     </header>
 
-    <main>
+    <!-- MAIN CONTENT -->
+    <main class="content">
         @RenderBody()
     </main>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("sidebar").classList.toggle("open");
+        }
+    </script>
+
 </body>
 </html>

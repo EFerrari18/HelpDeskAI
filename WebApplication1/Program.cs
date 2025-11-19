@@ -1,18 +1,47 @@
-﻿using HelpDeskAI.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using HelpDeskAI.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adiciona suporte a MVC (controllers + views)
+// ======================================
+// 🔹 CONFIGURAÇÃO DO BANCO DE DADOS
+// ======================================
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
+// ======================================
+// 🔹 CONFIGURAÇÃO DE AUTENTICAÇÃO / COOKIE
+// ======================================
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Usuario/Login";
+        options.LogoutPath = "/Usuario/Logout";
+        options.AccessDeniedPath = "/Usuario/AcessoNegado";
+        options.ExpireTimeSpan = TimeSpan.FromHours(8);
+        options.SlidingExpiration = true;
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", p => p.RequireRole("admin"));
+    options.AddPolicy("Gestor", p => p.RequireRole("gestor", "admin"));
+    options.AddPolicy("Usuario", p => p.RequireRole("usuario", "gestor", "admin"));
+});
+
+// ======================================
+// 🔹 MVC (Views + Controllers)
+// ======================================
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient<GeminiService>();
-// já tem builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configura o ambiente
+// ======================================
+// 🔹 MIDDLEWARE
+// ======================================
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -23,9 +52,17 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// 🔥 AUTENTICAÇÃO OBRIGATÓRIA (sem isso o login nunca funciona)
+app.UseAuthentication();
+
+// 🔥 AUTORIZAÇÃO
 app.UseAuthorization();
 
-// Define rota padrão
+// ======================================
+// 🔹 ROTAS
+// ======================================
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Usuario}/{action=Login}/{id?}");

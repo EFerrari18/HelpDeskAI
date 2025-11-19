@@ -1,45 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using HelpDeskAI.Models;
-using HelpDeskAI.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HelpDeskAI.Controllers
 {
     public class FaqController : Controller
     {
-        private readonly GeminiService _geminiService;
-
-        public FaqController(GeminiService geminiService)
+        private readonly Dictionary<string, string> respostas = new()
         {
-            _geminiService = geminiService;
-        }
+            { "senha", "Para recuperar sua senha, clique em 'Esqueci minha senha' na página de login." },
+            { "login", "Se não conseguir acessar, verifique seu e-mail e senha ou contate o suporte." },
+            { "erro",  "Erros podem ocorrer por instabilidade. Reinicie o navegador e tente novamente." },
+            { "chamado", "Para abrir um chamado, vá em 'Abrir Chamado' no menu lateral." },
+            { "suporte", "Nosso suporte funciona 24h para chamados críticos." }
+        };
 
-        public IActionResult Index()
+        public IActionResult Index(string busca)
         {
-            // Cria o modelo vazio ao abrir a página
-            return View(new FaqPergunta());
-        }
+            ViewBag.Busca = busca;
 
-        [HttpPost]
-        public async Task<IActionResult> Index(FaqPergunta model)
-        {
-            if (!string.IsNullOrWhiteSpace(model.Pergunta))
+            if (!string.IsNullOrEmpty(busca))
             {
-                try
-                {
-                    model.Resposta = await _geminiService.GetRespostaAsync(model.Pergunta);
-                }
-                catch (Exception ex)
-                {
-                    model.Resposta = "⚠️ Erro ao processar: " + ex.Message;
-                }
-            }
-            else
-            {
-                model.Resposta = "Por favor, digite uma pergunta.";
+                busca = busca.ToLower();
+
+                var resposta = respostas
+                    .Where(x => busca.Contains(x.Key))
+                    .Select(x => x.Value)
+                    .FirstOrDefault();
+
+                ViewBag.Resposta = resposta ?? "Nenhuma resposta encontrada. Tente mudar a pergunta!";
             }
 
-            // Retorna o mesmo modelo para a mesma View
-            return View(model);
+            return View();
         }
     }
 }

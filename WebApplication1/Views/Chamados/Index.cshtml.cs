@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebApplication1.Views.Chamados
 {
-    public class CriarModel : PageModel
+    public class IndexModel : PageModel
     {
         public void OnGet()
         {

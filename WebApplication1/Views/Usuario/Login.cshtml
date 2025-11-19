@@ -2,149 +2,124 @@
     ViewData["Title"] = "Login";
 }
 
-<div class="page-container">
-    <div class="form-card">
-        <h2>Login</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login - HelpDesk AI</title>
 
-        <form method="post" asp-action="Login" asp-controller="Usuario">
-            <input type="email" name="email" placeholder="E-mail" required />
-            <input type="password" name="senha" placeholder="Senha" required />
-            <button type="submit" class="btn-enviar">Entrar</button>
-        </form>
-
-        @if (ViewBag.Mensagem != null)
-        {
-            <p style="color:red;">@ViewBag.Mensagem</p>
+    <style>
+        body {
+            margin: 0;
+            background: #f2f4fa;
+            font-family: 'Segoe UI', sans-serif;
         }
 
-        <p class="link-text">
-            Ainda não tem conta?
-            <a href="/Usuario/Cadastrar">Cadastre-se</a>
-        </p>
-        </div>
-    </div>
-</div>
-
-
-<style>
-    /* === FAIXA SUPERIOR === */
-    body {
-        margin: 0;
-    }
-
-    .top-bar {
-        width: 100%;
-        background: #007bff;
-        color: white;
-        text-align: center;
-        padding: 8px 0;
-        font-size: 20px;
-        font-weight: bold;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    }
-
-
-        .top-bar span {
-            color: #dce6ff;
+        /* TOPBAR */
+        .topbar {
+            background: #0077ff;
+            padding: 22px 0;
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
         }
 
-    /* === CONTEÚDO CENTRAL === */
-    .page-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: calc(100vh - 60px);
-        background-color: #f5f7fb;
-        padding: 20px;
-    }
-
-    /* === CARTÕES CENTRAIS === */
-    .form-card {
-        background: white;
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-        width: 100%;
-        text-align: center;
-        transition: transform 0.2s;
-    }
-
-        .form-card:hover {
-            transform: translateY(-3px);
+        /* CARD CENTRAL */
+        .center-box {
+            width: 420px;
+            margin: 60px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
         }
 
-    h2 {
-        color: #007bff;
-        margin-bottom: 25px;
-    }
-
-    input {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 16px;
-        box-sizing: border-box;
-        transition: all 0.2s;
-    }
-
-        input:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 115, 255, 0.3);
-            outline: none;
+        h1 {
+            text-align: center;
+            color: #0077ff;
+            margin-bottom: 25px;
+            font-size: 28px;
         }
 
-    /* === BOTÃO PRINCIPAL === */
-    .btn-enviar {
-        width: 100%;
-        background: #007bff;
-        color: white;
-        border: none;
-        padding: 12px;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s;
-    }
-
-        .btn-enviar:hover {
-            background: #0056b3;
-            transform: scale(1.03);
-        }
-
-    /* === LINK DE NAVEGAÇÃO === */
-    .link-text {
-        margin-top: 15px;
-        font-size: 14px;
-    }
-
-        .link-text a {
-            color: #007bff;
-            text-decoration: none;
+        label {
             font-weight: bold;
+            color: #505050;
         }
 
-            .link-text a:hover {
-                text-decoration: underline;
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 1px solid #dcdcdc;
+            background: #fafafa;
+            margin-bottom: 18px;
+        }
+
+            .form-control:focus {
+                outline: none;
+                border-color: #0077ff;
+                box-shadow: 0 0 5px rgba(0,119,255,0.30);
             }
 
-    /* === BOTÃO VOLTAR === */
-    .btn-voltar {
-        display: inline-block;
-        background-color: #6c757d;
-        color: white;
-        padding: 10px 25px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        margin-top: 15px;
-        transition: 0.3s;
-    }
-
-        .btn-voltar:hover {
-            background-color: #5a6268;
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: #0077ff;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
         }
-</style>
+
+            .btn-primary:hover {
+                background: #005fcc;
+            }
+
+        /* ERRO */
+        .erro-msg {
+            background: #ffcccc;
+            padding: 12px;
+            text-align: center;
+            border-left: 5px solid #cc0000;
+            color: #990000;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">HelpDesk AI</div>
+
+    <div class="center-box">
+
+        <h1>Acessar Conta</h1>
+
+        @if (ViewBag.Erro != null)
+        {
+            <div class="erro-msg">@ViewBag.Erro</div>
+        }
+
+        <form asp-action="Login" method="post">
+
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" required placeholder="exemplo@email.com" />
+
+            <label>Senha</label>
+            <input type="password" name="senha" class="form-control" required placeholder="*******" />
+
+            <button class="btn-primary">Entrar</button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

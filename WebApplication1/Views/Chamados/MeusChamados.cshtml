@@ -4,37 +4,39 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Dashboard - HelpDesk AI</title>
+    <title>Meus Chamados - HelpDesk AI</title>
 
     <style>
+
         body {
             margin: 0;
-            background: #f2f4fa;
             font-family: 'Segoe UI', sans-serif;
+            background: #f5f8ff;
         }
 
-        /* HEADER */
+        /* ===== TOPBAR ===== */
         .topbar {
             background: #0077ff;
             padding: 22px 0;
-            color: white;
             text-align: center;
             font-size: 32px;
             font-weight: 800;
+            color: white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
+        /* ===== WRAPPER ===== */
         .wrapper {
             display: flex;
             height: calc(100vh - 80px);
         }
 
-        /* SIDEBAR */
+        /* ===== SIDEBAR ===== */
         .sidebar {
-            width: 220px;
+            width: 220px; /* AQUI está maior */
             background: white;
             padding: 25px;
-            box-shadow: 3px 0px 10px rgba(0,0,0,0.15);
+            box-shadow: 3px 0 10px rgba(0,0,0,0.15);
         }
 
             .sidebar a {
@@ -58,37 +60,69 @@
             color: #d9534f !important;
         }
 
-        /* CONTENT */
+        /* ===== CONTENT ===== */
         .content {
             flex: 1;
-            padding: 30px;
+            padding: 35px;
             overflow-y: auto;
         }
 
         h1 {
-            font-size: 28px;
             color: #0077ff;
+            font-size: 28px;
             text-align: center;
-            margin-top: 0;
+            margin-bottom: 25px;
         }
 
-        /* CARDS */
-        .cards {
-            display: flex;
-            gap: 25px;
-            justify-content: center;
-            margin-bottom: 35px;
-        }
-
-        .card {
-            width: 260px;
-            padding: 20px;
+        /* ===== CARD DA TABELA ===== */
+        .table-box {
+            background: white;
+            padding: 25px;
             border-radius: 18px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            width: 90%;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            table th {
+                background: #0077ff;
+                color: white;
+                padding: 10px;
+                font-size: 15px;
+            }
+
+            table td {
+                padding: 10px;
+                text-align: center;
+                border-bottom: 1px solid #eee;
+            }
+
+        .btn {
+            background: #0077ff;
+            padding: 7px 14px;
+            border-radius: 10px;
             color: white;
-            box-shadow: 0px 6px 20px rgba(0,0,0,0.1);
+            font-size: 14px;
+            text-decoration: none;
+            transition: .2s;
+        }
+
+            .btn:hover {
+                background: #005fcc;
+            }
+
+        /* STATUS */
+        .status {
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            color: white;
+            font-size: 12px;
         }
 
         .pendente {
@@ -103,74 +137,12 @@
         .finalizado {
             background: #28a745;
         }
-
-        /* TABLE */
-        .table-box {
-            background: white;
-            padding: 25px;
-            border-radius: 18px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.10);
-            width: 100%;
-            margin: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-            table th {
-                background: #0077ff;
-                color: white;
-                padding: 10px;
-                border-radius: 6px;
-                text-align: center;
-            }
-
-            table td {
-                padding: 10px;
-                text-align: center;
-                border-bottom: 1px solid #eaeaea;
-            }
-
-        .btn-detalhes {
-            background: #0077ff;
-            padding: 7px 14px;
-            border-radius: 12px;
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-            .btn-detalhes:hover {
-                background: #005fcc;
-            }
-
-        /* STATUS BADGES */
-        .status {
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-weight: bold;
-            color: white;
-        }
-
-        .pendente-badge {
-            background: #ff5c5c;
-        }
-
-        .andamento-badge {
-            background: #ffc107;
-            color: black;
-        }
-
-        .finalizado-badge {
-            background: #28a745;
-        }
     </style>
+
 </head>
 
 <body>
+
     <div class="topbar">HelpDesk AI</div>
 
     <div class="wrapper">
@@ -185,21 +157,12 @@
             <a href="/Usuario/Login" class="logout">Sair</a>
         </aside>
 
+        <!-- CONTENT -->
         <main class="content">
 
-            <h1>Dashboard de Chamados</h1>
+            <h1>Meus Chamados</h1>
 
-            <!-- CARDS -->
-            <div class="cards">
-                <div class="card pendente">Pendentes<br />@ViewBag.Pendentes</div>
-                <div class="card andamento">Em Andamento<br />@ViewBag.Andamento</div>
-                <div class="card finalizado">Finalizados<br />@ViewBag.Finalizados</div>
-            </div>
-
-            <!-- TABLE -->
             <div class="table-box">
-                <h3 style="text-align:center;">Chamados Recentes</h3>
-
                 <table>
                     <thead>
                         <tr>
@@ -220,16 +183,15 @@
                                 <td>@c.Categoria</td>
 
                                 <td>
-                                    <span class="status
-                                            @(c.Status == "Pendente" ? "pendente-badge" :
-                                                                                    c.Status == "Em andamento" ? "andamento-badge" :
-                                                                                    "finalizado-badge")">
+                                    <span class="status @(c.Status == "Pendente" ? "pendente" :
+                                                                                                    c.Status == "Em andamento" ? "andamento" :
+                                                                                                    "finalizado")">
                                     @c.Status
                                 </span>
                             </td>
 
                                 <td>
-                                    <a href="/Chamados/Detalhes/@c.Id" class="btn-detalhes">Ver</a>
+                                    <a href="/Chamados/Detalhes/@c.Id" class="btn">Ver</a>
                                 </td>
                             </tr>
                                                 }
@@ -239,6 +201,8 @@
             </div>
 
         </main>
+
     </div>
+
 </body>
 </html>
